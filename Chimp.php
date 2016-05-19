@@ -9,7 +9,7 @@ use sammaye\mailchimp\exceptions\MailChimpException;
 class Chimp
 {
     public $apikey;
-    public $endPoint = 'https://{$dc}.api.mailchimp.com/3.0'
+    public $endPoint = 'https://{$dc}.api.mailchimp.com/3.0';
     
     private $_client;
     
@@ -33,8 +33,11 @@ class Chimp
         'ComplianceRelated' => 'ComplianceRelatedException'
     ];
     
-    public function __construct()
+    public function __construct($params = [])
     {
+        foreach($params as $k => $v){
+            $this->$k = $v;
+        }
         $this->_client = new Client();
     }
     
@@ -97,7 +100,7 @@ class Chimp
             ->_client
             ->request(
                 $method, 
-                rtrim($this->getApiEndpoint(), '/') . '/' . $action, '/', 
+                rtrim($this->getApiEndpoint(), '/') . '/' . $action . '/', 
                 array_merge(
                     [
                         'auth' => ['', $this->apikey], 
@@ -106,25 +109,25 @@ class Chimp
                     $params
                 )
             );
-            
+        
         $body = json_decode($res->getBody());
         if($res->getStatusCode() !== 200){
         
-            $eName = preg_replace('#\s+#', '', strtolower($body->title));
+            $ename = preg_replace('#\s+#', '', strtolower($body->title));
         
             // Let's raise an exception
             foreach($this->_exceptions as $k => $v){
                 $name = preg_replace('#\s+#', '', strtolower($k));
                 if($name == $ename){
-                    $cname = '\sammaye\mailchimp\exceptions\\' . $k;
+                    $cname = '\sammaye\mailchimp\exceptions\\' . $v;
                     bereak;
                 }
             }
             
-            $message = $body->title . ': ' . $body->detail 
-                . '(' . $body->type . ')';
+            $message = $body->title . ': ' . rtrim($body->detail, '.') 
+                . ' (' . $body->type . ')';
             
-            if(isset($cname){
+            if(isset($cname)){
                 throw new $cname($message, $body->status);
             }else{
                 throw new MailChimpException($message, $body->status);
