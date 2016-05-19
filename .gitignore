@@ -1,0 +1,33 @@
+# ignore IDE specific files and dirs
+.idea
+.settings
+.project
+.buildpath
+.externalToolBuilders/
+
+environments/README.md
+environments/.gitignore
+
+environments/dev/
+environments/prod/
+index.php
+
+
+*.mrc
+*.mrk
+
+# ignore compressed CSS
+all-*.css
+widgets-*.css
+base-*.css
+
+# ignore compressed JS
+all-*.js
+widgets-*.js
+
+# ignore assets_compressed so it is made again
+assets_compressed.php
+
+# ignore temporary files
+*~
+*-local.php

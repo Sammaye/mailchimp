@@ -1,0 +1,23 @@
+{
+    "name": "sammaye/mailchimp",
+    "description": "A PHP API wrapper for v3.0 for the MailChimp API",
+    "keywords": [
+        "mailchimp",
+        "api"
+    ],
+    "homepage": "http://sammaye.wordpress.com",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Sammaye",
+            "homepage": "http://sammaye.wordpress.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "6.*"
+    },
+    "autoload": {
+        "psr-4": {"sammaye\\mailchimp\\": ""}
+    }
+}
