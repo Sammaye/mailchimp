@@ -1,4 +1,4 @@
-A PHP API wrapper for v3.0 for the MailChimp API
+A PHP API wrapper for v3.0 of the MailChimp API
 
 ## Installing
 
