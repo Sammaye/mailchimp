@@ -111,8 +111,10 @@ class Chimp
             );
         
         $body = json_decode($res->getBody());
-        if($res->getStatusCode() !== 200){
-        
+        if(
+            ($method === 'DELETE' && $res->getStatusCode() !== 204) || 
+            $res->getStatusCode() !== 200
+        ){
             $ename = preg_replace('#\s+#', '', strtolower($body->title));
         
             // Let's raise an exception
