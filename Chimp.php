@@ -138,9 +138,9 @@ class Chimp
             
             $message = $body->title . ': ' . rtrim($body->detail, '.') 
                 . ' (' . $body->type . ') errors: ' 
-                . property_exists($body, 'errors') 
+                . (property_exists($body, 'errors') 
                     ? var_export($body->errors, true) 
-                    : ' None';
+                    : ' None');
             
             if(isset($cname)){
                 throw new $cname($message, $body->status);
