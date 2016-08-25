@@ -115,6 +115,7 @@ class Chimp
             ($method === 'DELETE' && $res->getStatusCode() !== 204) || 
             $res->getStatusCode() !== 200
         ){
+            
             $ename = preg_replace('#\s+#', '', strtolower($body->title));
         
             // Let's raise an exception
@@ -122,7 +123,7 @@ class Chimp
                 $name = preg_replace('#\s+#', '', strtolower($k));
                 if($name == $ename){
                     $cname = '\sammaye\mailchimp\exceptions\\' . $v;
-                    bereak;
+                    break;
                 }
             }
             
