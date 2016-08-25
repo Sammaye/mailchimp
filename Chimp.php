@@ -9,7 +9,16 @@ use sammaye\mailchimp\exceptions\MailChimpException;
 class Chimp
 {
     public $apikey;
+    
     public $endPoint = 'https://{$dc}.api.mailchimp.com/3.0';
+    
+    public $methods = [
+        'GET' => 200,
+        'PUT' => 200,
+        'POST' => 200,
+        'PATCH' => 200,
+        'DELETE' => 204
+    ];
     
     private $_client;
     
@@ -110,11 +119,12 @@ class Chimp
                 )
             );
         
+        $successCode = is_array($this->methods[$method]) 
+            ? $this->methods[$method][0] 
+            : $this->methods[$method];
+        
         $body = json_decode($res->getBody());
-        if(
-            (strtolower((String)$method) === 'delete' && $res->getStatusCode() !== 204) || 
-            (strtolower((String)$method) !== 'delete' && $res->getStatusCode() !== 200)
-        ){
+        if($res->getStatusCode() !== $successCode){
             $ename = preg_replace('#\s+#', '', strtolower($body->title));
         
             // Let's raise an exception
