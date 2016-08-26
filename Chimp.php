@@ -151,4 +151,14 @@ class Chimp
             return $body;
         }
     }
+    
+    public static function int($value)
+    {
+        return $value ?: 0;
+    }
+    
+    public static function string($value)
+    {
+        return $value ?: 'None';
+    }
 }
