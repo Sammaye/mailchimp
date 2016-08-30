@@ -127,7 +127,7 @@ class Chimp
         if($res->getStatusCode() !== $successCode){
             
             if(!is_object($body)){
-                throw new sammaye\mailchimp\InternalServerErrorException(
+                throw new \sammaye\mailchimp\InternalServerErrorException(
                     'Something really bad has happened to MailChimp, he is too ill to respond'
                 );
             }
