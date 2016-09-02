@@ -5,6 +5,7 @@ namespace sammaye\mailchimp;
 use GuzzleHttp\Client;
 
 use sammaye\mailchimp\exceptions\MailChimpException;
+use sammaye\mailchimp\exceptions\InternalServerErrorException;
 
 class Chimp
 {
@@ -127,8 +128,9 @@ class Chimp
         if($res->getStatusCode() !== $successCode){
             
             if(!is_object($body)){
-                throw new \sammaye\mailchimp\InternalServerErrorException(
-                    'Something really bad has happened to MailChimp, he is too ill to respond'
+                throw new InternalServerErrorException(
+                    'Something really bad has happened to MailChimp, he is too ill to respond',
+                    $body->status
                 );
             }
             
@@ -144,15 +146,25 @@ class Chimp
             }
             
             $message = $body->title . ': ' . rtrim($body->detail, '.') 
-                . ' (' . $body->type . ') errors: ' 
-                . (property_exists($body, 'errors') 
-                    ? var_export($body->errors, true) 
-                    : ' None');
+                . ' (' . $body->type . ') ' 
+                . (
+                    property_exists($body, 'errors') 
+                        ? ' - Errors: ' . var_export($body->errors, true) 
+                        : ' '
+                );
             
             if(isset($cname)){
-                throw new $cname($message, $body->status);
+                throw new $cname(
+                    $message, 
+                    $body->status,
+                    property_exists($body, 'errors') ? $body->errors : []
+                );
             }else{
-                throw new MailChimpException($message, $body->status);
+                throw new MailChimpException(
+                    $message, 
+                    $body->status,
+                    property_exists($body, 'errors') ? $body->errors : []
+                );
             }
         }else{
             return $body;
