@@ -7,7 +7,7 @@ The recommended way to install this is via composer, however, if you install it 
 ## How to use
 
 ```php
-$client = new sammaye\MailChimp\Chimp();
+$client = new sammaye\mailchimp\Chimp();
 $client->apikey = 'chimp_chimp';
 $client->get('/');
 ```
