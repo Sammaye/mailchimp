@@ -130,7 +130,7 @@ class Chimp
             if(!is_object($body)){
                 throw new InternalServerErrorException(
                     'Something really bad has happened to MailChimp, he is too ill to respond',
-                    $body->status
+                    $res->getStatusCode()
                 );
             }
             
